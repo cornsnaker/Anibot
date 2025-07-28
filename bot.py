@@ -19,9 +19,9 @@ logging.basicConfig(
 LOGGER = logging.getLogger(name)
 
 # Bot configuration
-api_id = 123456  # Replace with your Telegram API ID
-api_hash = "your_api_hash_here"  # Replace with your Telegram API hash
-bot_token = "your_bot_token_here"  # Replace with your bot token
+api_id = 25713073  # Replace with your Telegram API ID
+api_hash = "65a23aaa7a97f42475de52ed240af2f3"  # Replace with your Telegram API hash
+bot_token = "8243250670:AAF8dIc3CqAWTn7Ex6jWp5nPgmMdE3kIB4U"  # Replace with your bot token
 
 # Initialize the bot
 bot = Client("anime_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
