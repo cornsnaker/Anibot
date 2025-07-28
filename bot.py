@@ -10,19 +10,18 @@ from calendar import month_name
 from pycountry import countries as conn
 from urllib.parse import quote as q
 import logging
-from collections import OrderedDict
 
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger(name)
 
 # Bot configuration
-api_id = 25713073  # Replace with your Telegram API ID
-api_hash = "65a23aaa7a97f42475de52ed240af2f3"  # Replace with your Telegram API hash
-bot_token = "8243250670:AAF8dIc3CqAWTn7Ex6jWp5nPgmMdE3kIB4U"  # Replace with your bot token
+api_id = 123456  # Replace with your Telegram API ID
+api_hash = "your_api_hash_here"  # Replace with your Telegram API hash
+bot_token = "your_bot_token_here"  # Replace with your bot token
 
 # Initialize the bot
 bot = Client("anime_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
@@ -32,15 +31,16 @@ class BotCommands:
     AniListCommand = "anime"
     AnimeHelpCommand = "animehelp"
 
-# Custom filters
-class CustomFilters:
-    @staticmethod
-    def authorized(_, __):
-        return True
-    
-    @staticmethod
-    def blacklisted(_, __):
-        return False
+# Custom filters as actual filters
+def authorized_filter(_, , _):
+    return True
+
+def blacklisted_filter(_, , _):
+    return False
+
+# Create filter objects
+authorized = filters.create(authorized_filter)
+blacklisted = filters.create(blacklisted_filter)
 
 # Helper functions
 def get_readable_time(seconds):
@@ -629,30 +629,22 @@ def register_handlers():
     # Command handlers
     bot.add_handler(MessageHandler(
         anilist, 
-        filters.command(BotCommands.AniListCommand) & 
-        CustomFilters.authorized & 
-        ~CustomFilters.blacklisted
+        filters.command(BotCommands.AniListCommand) & authorized & ~blacklisted
     ))
     
     bot.add_handler(MessageHandler(
         character,
-        filters.command("character") & 
-        CustomFilters.authorized & 
-        ~CustomFilters.blacklisted
+        filters.command("character") & authorized & ~blacklisted
     ))
     
     bot.add_handler(MessageHandler(
         manga,
-        filters.command("manga") & 
-        CustomFilters.authorized & 
-        ~CustomFilters.blacklisted
+        filters.command("manga") & authorized & ~blacklisted
     ))
     
     bot.add_handler(MessageHandler(
         anime_help,
-        filters.command(BotCommands.AnimeHelpCommand) & 
-        CustomFilters.authorized & 
-        ~CustomFilters.blacklisted
+        filters.command(BotCommands.AnimeHelpCommand) & authorized & ~blacklisted
     ))
     
     # Callback handlers
@@ -666,7 +658,7 @@ def register_handlers():
         filters.regex(r"^cha")
     ))
 
-if __name__ == "__main__":
+if name == "main":
     LOGGER.info("Starting Anime Bot...")
     register_handlers()
     bot.run()
