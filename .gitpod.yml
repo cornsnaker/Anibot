@@ -1,0 +1,13 @@
+# This file configures your Gitpod workspace.
+tasks:
+  - name: Run Windows VM Setup
+    init: |
+      echo "Workspace is initializing..."
+      echo "The main setup script will run next."
+      echo "Please read the README.md file for crucial warnings."
+    command: |
+      echo "Making the setup script executable..."
+      chmod +x rdp-setup.sh
+      echo "Running the setup script..."
+      echo "You will be prompted to enter an ngrok region."
+      ./rdp-setup.sh
